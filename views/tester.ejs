@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Tester</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div class="empadd">
+      <table>
+       <form  name="empaddform" action="tester" method="POST">
+        <tr>
+          <td><label>Rest API URL: </label> </td>
+          <td><input type="text" placeholder="varCallURL" name="varCallURL" size="200" required> </td>
+        </tr>
+        <tr>
+        <td><label>Method: </label> </td>
+        <td><input type="radio" id="GET" name="varMethod" value="GET">
+          <label for="GET">get</label> 
+          <input type="radio" id="POST" name="varMethod" value="POST">
+          <label for="post">POST</label> 
+          <input type="radio" id="PUT" name="varMethod" value="PUT">
+          <label for="PUT">PUT</label> 
+          <input type="radio" id="PATCH" name="varMethod" value="PATCH">
+          <label for="PATCH">PATCH</label> 
+          <input type="radio" id="DELETE" name="varMethod" value="DELETE">
+          <label for="DELETE">DELETE</label> 
+        </td>
+      </tr>
+      <tr> <td> Choose Authenication or leave blank</td></tr>
+      <tr> 
+       <td> <label>Bearer Token: </label> </td>
+       <td><input type="textarea" placeholder="varBearerToken" name="varBearerToken" size="200"></td> 
+      </tr>
+      <tr> <td> Or </td></tr>
+      <tr>
+        <td><label>API Key: </label> </td> 
+        <td><input type="textarea" placeholder="varAPIKey" name="varAPIKey" size="200"> </td>
+      </tr>
+      <tr>
+          <td><label>Parms used with Get Method only: </label>  </td> 
+          <td><input type="text" placeholder="varParms" name="varParms" size="200"> </td>
+      </tr>
+      <tr>
+          <td><label>Json Body used with Post,Put,Patch,and Delete methods only : </label> </td>  
+          <td><textarea rows = "20" cols = "200" placeholder="varBody" name="varBody" size="4" ></textarea>  </td>
+      </tr>
+      
+        <td><button type="submit">Test</button></td>
+      </form>
+    </table>
+    </div>
+    <table>
+       
+       <tr>
+         <td>Results: </td>
+         
+     <tr>
+         <td><textarea rows = "20" cols = "200" placeholder="results" name="results" size="4" ><%=JSON.stringify(resultdata,null,4)%></textarea>  </td>
+     </tr>
+     
+                  
+    </table>
+  </body>
+</html>
+

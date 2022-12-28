@@ -1,0 +1,101 @@
+var express = require('express');
+var emp = require('request');
+const fetch = require('node-fetch');
+
+
+// function to call any Rest API if all of the proper values are passed. 
+var methods = {
+  RestAPICall:  async function(varCallURL,varParms,varMethod,varBody,varBearerToken, varAPIKey) { 
+     //console.log ("params from tester",varCallURL," ",varParms, "  ", varMethod," ", varBody," ",varBearerToken,"  " ,varAPIKey )
+   var  rtnResults = "test"
+   var jsonbody ='' 
+   
+       
+        
+
+        if(varBearerToken){
+                   // console.log('bearer', varBearerToken)
+                    var varAuth = 'Bearer ' +  varBearerToken;  // this is the authorization method used when a Bearer Token is passed
+                   
+
+                        }
+        else {
+          //console.log('api Key', varAPIKey)
+            //var varAuth = 'API Key ' +  varAPIKey;  // this is the authorization method used when there is an API Key
+            var varAuth = '' ; 
+        }
+        
+        if(varMethod === 'GET'){ //if varMethod is a 'get'  include the varParms field in case values are being passed.
+          //  varBody must be empty
+                         var varURL = varCallURL + varParms;
+                        // console.log ('about to call rest')
+                 // Invoke (call the Rest API)
+                        const result = await  fetch (varURL,( 
+                          varURL,{
+                          method: varMethod,
+                          withCredentials: true,
+                          credentials: 'include',
+                          headers: {
+                              'Authorization': varAuth,
+                              'Content-Type': 'application/json' },
+                            
+                              
+                  }))
+                  .then((response) => response.json())  // the response passed back from the Call
+                  .then((data) => {  // The Data or Message returnback from the call
+                                    
+                                    rtnResults = data;
+                                    global.restcall_response = data
+                                    //console.log('after call', rtnResults)
+                                  
+                                    return rtnResults;
+                                  })
+                  .catch((error) => {
+                                    console.error('Error:', error);
+                                    rtnResults= error
+                                    global.restcall_response = error
+                                    return  rtnResults
+                                    });   
+      }
+else    {
+//  If the varMethod  is 'post, patch, put or delete', then do not include the varParms, 
+//  becasue any values will be passed in the varBody. varParms must be empty
+       var varURL = varCallURL;
+       // Invoke (call the Rest API)
+       jsonbody = varBody
+       //console.log ('jsonbody',jsonbody)
+       const result = await  fetch (varURL,( 
+        varURL,{
+        method: varMethod,
+        withCredentials: true,
+        credentials: 'include',
+        headers: {
+            'Authorization': varAuth,
+            'Content-Type': 'application/json' },
+           body:jsonbody 
+            
+}))
+.then((response) => response.json())  // the response passed back from the Call
+.then((data) => {  // The Data or Message returnback from the call
+                  
+                  rtnResults = data;
+                  global.restcall_response = data
+                 console.log('after call', rtnResults)
+                 
+                  return data;
+                })
+.catch((error) => {
+                  console.error('Error:', error);
+                  rtnResults= error
+                  global.restcall_response = error
+                  return  rtnResults
+                  });   
+
+}
+             
+                 
+                }};
+
+                            
+exports.data = methods;
+                    
